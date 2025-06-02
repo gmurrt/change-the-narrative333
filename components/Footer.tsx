@@ -58,7 +58,7 @@ const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="p-2 w-full sm:w-auto border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-accent"
+                className="p-2 w-80 sm:w-auto border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-accent"
               />
               <Button
                 type="submit"

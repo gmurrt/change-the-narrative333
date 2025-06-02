@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { logo } from '@/assets';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,13 +15,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className="bg-[#FFF5ED] shadow-sm sticky top-0 z-50">
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-primary font-bold text-2xl">Change the Narrative</span>
-              <span className="text-accent font-extrabold ml-1">333</span>
+            <Image 
+              src={logo}
+              height={60}
+              width={60}
+              alt='logo'
+            />
             </Link>
           </div>
 

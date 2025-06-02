@@ -16,6 +16,7 @@ import {
   FileText,
   Heart,
   HelpCircle,
+  LogOutIcon,
   User,
 } from "lucide-react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -27,15 +28,22 @@ import WantToHelpTab from "./WantToHelpTab";
 import BlogTab from "./BlogTab";
 import ProfileCard from "./UserProfile";
 import Link from "next/link";
+import { useAdminDonation } from "@/hooks/useAdminDonation";
 
 const Dashboard = () => {
   const router = useRouter();
+  const { content } = useAdminDonation();
   const [accountType, setAccountType] = useState<"seekers" | "supporter">(
     "seekers"
   );
 
   const toggleAccountType = (type: "seekers" | "supporter") => {
     setAccountType(type);
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push('/login');
   };
 
   useEffect(() => {
@@ -59,11 +67,18 @@ const Dashboard = () => {
 
           {/* Main Content */}
           <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-6">Your Dashboard</h1>
+            <div className="flex justify-between">
+               <h1 className="text-3xl font-bold mb-6">Your Dashboard</h1>
+               <Button className="bg-gray-100 hover:bg-gray-200 text-black" onClick={handleLogout}><LogOutIcon/> Logout</Button>
+            </div>
 
             <Tabs defaultValue="seeking-help">
               <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
-                <TabsTrigger value="seeking-help">Seeking Help</TabsTrigger>
+                <TabsTrigger
+                  value="seeking-help"
+                >
+                  Seeking Help
+                </TabsTrigger>
                 <TabsTrigger value="want-to-help">Want to Help</TabsTrigger>
                 <TabsTrigger value="blog">View Blog</TabsTrigger>
                 <TabsTrigger value="donation">Donation Info</TabsTrigger>
@@ -97,7 +112,7 @@ const Dashboard = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                         <div className="bg-primary/10 rounded-lg p-6">
                           <p className="text-3xl font-bold text-primary mb-2">
-                            60%
+                            {content?.allocation.directSupport}%
                           </p>
                           <p className="font-medium">Direct Support Services</p>
                           <p className="text-sm text-gray-600 mt-2">
@@ -108,7 +123,7 @@ const Dashboard = () => {
 
                         <div className="bg-secondary/10 rounded-lg p-6">
                           <p className="text-3xl font-bold text-secondary mb-2">
-                            25%
+                            {content?.allocation.communityPrograms}%
                           </p>
                           <p className="font-medium">Community Programs</p>
                           <p className="text-sm text-gray-600 mt-2">
@@ -118,7 +133,7 @@ const Dashboard = () => {
 
                         <div className="bg-accent/10 rounded-lg p-6">
                           <p className="text-3xl font-bold text-accent mb-2">
-                            15%
+                            {content?.allocation.operations}%
                           </p>
                           <p className="font-medium">Operations</p>
                           <p className="text-sm text-gray-600 mt-2">

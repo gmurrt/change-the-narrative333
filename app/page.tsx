@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section - Bold, full-width with impactful typography */}
-      <section className="relative h-[70vh] w-full overflow-hidden">
+      <section className="relative md:h-[70vh] h-[40vh] w-full overflow-hidden">
         {/* Background Image Layer */}
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
@@ -23,41 +23,41 @@ export default function Home() {
         </div>
 
         {/* Right-aligned welcome text */}
-        <div className="relative p-2 z-10 w-fit h-full flex items-center ml-auto mr-32 -top-1/4">
-          <div className="text-white max-w-md text-justify space-y-2">
-            <h2 className="text-lg font-bold">Welcome to Philadelphia</h2>
-            <p className="text-md text-white/80">
-              Centering community, justice, and resilience in the City of
-              Brotherly Love.
+        <div className="relative p-2 z-10 w-fit h-full flex items-center ml-auto mr-16 -top-1/4">
+          <div className="text-white max-w-md space-y-2">
+            <h2 className="text-sm md:text-lg font-bold">
+              Welcome to Philadelphia
+            </h2>
+            <p className="text-xs md:text-sm text-white/80">
+              Centering community, justice, and resilience
+              <br /> in the City of Brotherly Love.
             </p>
           </div>
         </div>
       </section>
 
       {/* Overlapping Typography Box with blend mode */}
-      <div className="md:-mt-40 -mt-[5.4rem] z-30 relative lg:ml-32 ml-4 p-10 md:p-16 rounded-md w-fit isolate">
-        <div className="max-w-5xl mx-auto md:ml-0">
-          <h1 className="text-5xl md:text-8xl font-black uppercase mb-4 tracking-tight mix-blend-difference">
-            <span className="text-white">THE POWER OF </span>
+      <div className="md:-mt-[5.8rem] lg:-mt-[8rem] -mt-[3rem] z-30 relative">
+        <div className="container-custom">
+          <h1 className="text-5xl md:text-8xl lg:text-9xl font-black uppercase mb-4 tracking-tight">
+            <span className="text-white whitespace-nowrap">THE POWER OF </span>
             <br />
             THE PEOPLE.
           </h1>
           <p className="text-lg md:text-2xl text-black mb-2">
             Centering People. Building Access. Driven by Justice.
           </p>
-          <p className="text-sm text-white/70 mb-6">
-            501(c)(3) Non-Profit Organization
-          </p>
+          <p className="text-sm mb-6">501(c)(3) Non-Profit Organization</p>
           <div className="flex gap-4 flex-wrap">
             <Link href="/register">
-              <Button className="bg-white text-accent hover:bg-gray-100 text-lg px-6 py-4 font-bold">
+              <Button className="bg-red-600 hover:bg-red-500 rounded-full text-lg px-6 py-4 font-bold">
                 GET HELP
               </Button>
             </Link>
             <Link href="/donate">
               <Button
                 variant="outline"
-                className="border-white hover:text-black hover:bg-white/10 text-lg px-6 py-4 font-bold"
+                className="border-white rounded-full hover:text-black hover:bg-white/10 text-lg px-6 py-4 font-bold"
               >
                 SUPPORT US
               </Button>
@@ -70,94 +70,83 @@ export default function Home() {
       <section className="py-16 bg-white">
         <div className="container-custom">
           <h2 className="text-4xl md:text-5xl font-black mb-12 uppercase">
-            We Fight for Racial Justice Issues
+            Our Mission
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-6 gap-6">
-            {/* 1st Box - Large Horizontal */}
-            <div className="col-span-1 sm:col-span-6 bg-primary text-white rounded-xl overflow-hidden relative group">
-              <div
-                className="h-56 sm:h-64 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1569937756447-364d5270d4d8?q=80&w=987&auto=format&fit=crop)",
-                }}
+          <div className="grid grid-cols-1 md:grid-cols-6 grid-rows-[repeat(3,minmax(200px,1fr))] gap-6 auto-rows-[200px]">
+            {/* Problem (Big block) */}
+            <div className="relative rounded-xl overflow-hidden group col-span-1 row-span-1 md:col-span-4 md:row-span-2 h-80 md:h-[41.5rem]">
+              <Image
+                src="https://images.unsplash.com/photo-1557089041-7fa93ffc2e08?w=600&auto=format&fit=crop&q=60"
+                alt="Gun Violence Context"
+                width={987}
+                height={640}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="p-6">
+              <div className="absolute inset-0 bg-black bg-opacity-50 p-6 flex flex-col justify-end text-white">
                 <h3 className="text-2xl font-bold mb-2">
-                  Strengthening Democracy & Voting Rights
+                  Understanding the Problem
                 </h3>
+                <p className="text-sm">
+                  Gun violence is not an isolated issue—it’s the result of
+                  intersecting social challenges like poverty, housing
+                  instability, underfunded schools, and generational trauma.
+                </p>
                 <Link
                   href="/about"
-                  className="text-gold hover:underline font-medium"
+                  className="text-gold hover:underline font-medium mt-3"
                 >
-                  Learn More →
+                  View More →
                 </Link>
               </div>
             </div>
 
-            {/* 2nd Box - Square */}
-            <div className="col-span-1 sm:col-span-3 bg-secondary text-white rounded-xl overflow-hidden">
-              <div
-                className="h-48 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1584577707881-aa9a2a240bfc?q=80&w=1035&auto=format&fit=crop)",
-                }}
+            {/* Solution */}
+            <div className="relative rounded-xl overflow-hidden group col-span-1 md:col-span-2 row-span-1 h-80">
+              <Image
+                src="https://images.unsplash.com/photo-1587426301582-fe3d3deaf58a?w=600&auto=format&fit=crop&q=60"
+                alt="Solution Image"
+                width={987}
+                height={640}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="p-5">
-                <h3 className="text-xl font-bold mb-2">
-                  Dismantling White Supremacy
-                </h3>
+              <div className="absolute inset-0 bg-black bg-opacity-50 p-6 flex flex-col justify-end text-white">
+                <h3 className="text-2xl font-bold mb-2">Our Approach</h3>
+                <p className="text-sm">
+                  We build bridges between communities and resources by
+                  partnering with local organizations, creating resource hubs,
+                  and increasing visibility through media and events.
+                </p>
                 <Link
                   href="/about"
-                  className="text-gold hover:underline font-medium"
+                  className="text-gold hover:underline font-medium mt-3"
                 >
-                  Learn More →
+                  View More →
                 </Link>
               </div>
             </div>
 
-            {/* 3rd Box - Tall */}
-            <div className="col-span-1 sm:col-span-3 bg-primary text-white rounded-xl overflow-hidden">
-              <div
-                className="h-72 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1472162072942-cd5147eb3902?q=80&w=1169&auto=format&fit=crop)",
-                }}
+            {/* Vision (Tall block) */}
+            <div className="relative rounded-xl overflow-hidden group col-span-1 md:col-span-2 row-span-2 h-80">
+              <Image
+                src="https://images.unsplash.com/photo-1590962374541-d368b15568e9?w=600&auto=format&fit=crop&q=60"
+                alt="Impact Image"
+                width={987}
+                height={640}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="p-5">
-                <h3 className="text-xl font-bold mb-2">
-                  Ending Unjust Imprisonment
-                </h3>
+              <div className="absolute inset-0 bg-black bg-opacity-50 p-6 flex flex-col justify-end text-white">
+                <h3 className="text-2xl font-bold mb-2">The Impact</h3>
+                <p className="text-sm">
+                  We envision safer, more stable communities where individuals
+                  have the tools to heal, grow, and break cycles of
+                  trauma—unlocking their full potential.
+                </p>
                 <Link
                   href="/about"
-                  className="text-gold hover:underline font-medium"
+                  className="text-gold hover:underline font-medium mt-3"
                 >
-                  Learn More →
-                </Link>
-              </div>
-            </div>
-
-            {/* 4th Box - Wide */}
-            <div className="col-span-1 sm:col-span-6 bg-secondary text-white rounded-xl overflow-hidden">
-              <div
-                className="h-64 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1589216532372-1c2a367900d9?q=80&w=987&auto=format&fit=crop)",
-                }}
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2">
-                  Eliminating Poverty and Economic Inequality
-                </h3>
-                <Link
-                  href="/about"
-                  className="text-gold hover:underline font-medium"
-                >
-                  Learn More →
+                  View More →
                 </Link>
               </div>
             </div>

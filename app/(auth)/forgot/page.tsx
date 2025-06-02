@@ -26,7 +26,10 @@ export default function ForgotPasswordPage() {
     }
 
     try {
-      await sendPasswordResetEmail(auth, email);
+      await sendPasswordResetEmail(auth, email, {
+        url : process.env.NEXT_PUBLIC_URL + "/login",
+         handleCodeInApp: true
+      });
       setStatus({ type: 'success', message: 'Password reset email sent. Check your inbox.' });
     } catch (error) {
       console.error(error);

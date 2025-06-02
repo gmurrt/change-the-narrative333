@@ -17,14 +17,18 @@ import { useAdminBlog } from "@/hooks/useAdminBlog";
 import Image from "next/image";
 import Link from "next/link";
 
+const POSTS_PER_PAGE = 6;
+
 const Blog = () => {
   const { posts, loadingBlog } = useAdminBlog();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (!loadingBlog) {
       setFilteredPosts(posts);
+      setCurrentPage(1); // Reset to first page on data change
     }
   }, [posts, loadingBlog]);
 
@@ -32,6 +36,7 @@ const Blog = () => {
     e.preventDefault();
     if (searchTerm.trim() === "") {
       setFilteredPosts(posts);
+      setCurrentPage(1);
       return;
     }
 
@@ -40,9 +45,22 @@ const Blog = () => {
       (post) =>
         post.title?.toLowerCase().includes(lowerTerm) ||
         post.excerpt?.toLowerCase().includes(lowerTerm) ||
-        (post.tags || []).some((tag) => tag.toLowerCase().includes(lowerTerm))
+        post.category?.toLowerCase().includes(lowerTerm)
     );
     setFilteredPosts(results);
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const paginatedPosts = filteredPosts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setCurrentPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -89,7 +107,12 @@ const Blog = () => {
             </div>
 
             <TabsContent value="all">
-              <BlogPostList posts={filteredPosts} />
+              <BlogPostList posts={paginatedPosts} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </TabsContent>
 
             <TabsContent value="seekers">
@@ -187,6 +210,40 @@ const BlogPostList = ({ posts }: { posts: any[] }) => {
           </CardFooter>
         </Card>
       ))}
+    </div>
+  );
+};
+
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}) => {
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex justify-center items-center gap-4 mt-12">
+      <Button
+        variant="outline"
+        disabled={currentPage === 1}
+        onClick={() => onPageChange(currentPage - 1)}
+      >
+        Previous
+      </Button>
+      <span className="text-sm">
+        Page {currentPage} of {totalPages}
+      </span>
+      <Button
+        variant="outline"
+        disabled={currentPage === totalPages}
+        onClick={() => onPageChange(currentPage + 1)}
+      >
+        Next
+      </Button>
     </div>
   );
 };

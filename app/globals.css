@@ -220,6 +220,10 @@
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
+.container-custom-hero {
+  @apply max-w-7xl px-4 sm:px-6 lg:px-8
+}
+
 /* ======= ANIMATIONS ======= */
 @keyframes float {
   0%   { transform: translateY(0px); }
@@ -267,6 +271,16 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
+.editor-input {
+  min-height: 300px;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  outline: none;
+}
+
 
 @keyframes logo-spin {
   from { transform: rotate(0deg); }

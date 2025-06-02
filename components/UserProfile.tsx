@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { User } from 'lucide-react';
+import { EditIcon, Loader2, User } from 'lucide-react';
 import { auth } from '@/lib/firebase/utils';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
@@ -41,6 +41,7 @@ const ProfileCard = ({toggleAccountType} : Props) => {
   const [location, setLocation] = useState('');
   const [accountType, setAccountType] = useState<'seekers' | 'supporter'>('seekers');
   const [profilePic, setProfilePic] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (profile) {
@@ -51,14 +52,11 @@ const ProfileCard = ({toggleAccountType} : Props) => {
     }
   }, [profile]);
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    router.push('/login');
-  };
-
   const handleSave = async () => {
+    setIsSaving(true);
     await saveProfile({ name, location, accountType, profilePic });
     toggleAccountType(accountType);
+    setIsSaving(false);
     setIsEditing(false);
   };
 
@@ -136,10 +134,7 @@ const ProfileCard = ({toggleAccountType} : Props) => {
           className="w-full hover:text-black"
           onClick={isEditing ? handleSave : () => setIsEditing(true)}
         >
-          {isEditing ? 'Save Changes' : 'Edit Profile'}
-        </Button>
-        <Button className="bg-gray-100 hover:bg-gray-200 w-full text-black" onClick={handleLogout}>
-          Log out
+          {isEditing ? isSaving ? <><Loader2 className='animate-spin h-8 w-8'/>Saving...</>: 'Save Changes' : <><EditIcon/> Edit Profile</>}
         </Button>
       </CardFooter>
     </Card>

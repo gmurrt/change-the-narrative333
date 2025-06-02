@@ -72,9 +72,9 @@ const WantToHelpTab = () => {
               <p className="mb-4 text-sm">
                 Share your skills and time to help those affected by gun violence and systemic inequality.
               </p>
-              <Button variant="outline" className="flex items-center" onClick={() => setOpen(true)}>
+              <Button className="bg-transparent text-black hover:bg-gray-400 flex items-center" onClick={() => setOpen(true)}>
                 View Opportunities
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
 
@@ -83,7 +83,7 @@ const WantToHelpTab = () => {
               <p className="mb-4 text-sm">
                 Your financial support enables us to provide resources and services to those in need.
               </p>
-              <Button className="flex items-center" asChild>
+              <Button className="flex items-center w-fit" asChild>
                 <Link href="/donate">
                   Donate Now
                   <ArrowRight className="ml-2 h-4 w-4" />

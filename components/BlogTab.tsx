@@ -50,7 +50,11 @@ const BlogTab = ({accountType} : Props) => {
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              {helpSeekerPosts.map((post) => (
+              {helpSeekerPosts.length === 0 ? <>
+                <div className="text-center">
+                  No blogs for {accountType} yet.
+                </div>
+              </> : helpSeekerPosts.map((post) => (
                 <Card key={post.id}>
                   <CardHeader className="p-4">
                     <CardTitle className="text-lg">{post.title}</CardTitle>
@@ -83,8 +87,8 @@ const BlogTab = ({accountType} : Props) => {
               ))}
             </div>
 
-            <Button variant="outline" className="w-full hover:text-black" asChild>
-              <Link href="/blog">View All Blog Posts</Link>
+            <Button variant="outline" className="w-fit hover:text-black" asChild>
+              <Link href="/blog">{helpSeekerPosts.length === 0 ? 'View other blogs' : 'View All Blog Posts' }</Link>
             </Button>
           </div>
         </CardContent>
