@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FooterSecondary from "./FooterSecondary";
+import NavbarSecondary from "./NavbarSecondary";
 
 export default function ClientLayout({
   children,
@@ -10,7 +12,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const showNavbar = !(
+  const showPrimaryNavbarAndFooter = !(
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/admin") ||
     pathname.startsWith("/login") ||
@@ -21,9 +23,9 @@ export default function ClientLayout({
 
   return (
     <>
-      {showNavbar && <Navbar />}
+      {showPrimaryNavbarAndFooter ? <Navbar /> : <div className="w-full max-h-[7rem] overflow-hidden"><NavbarSecondary/></div>}
       {children}
-      <Footer />
+      {showPrimaryNavbarAndFooter ? <Footer/> : <FooterSecondary />}
     </>
   );
 }

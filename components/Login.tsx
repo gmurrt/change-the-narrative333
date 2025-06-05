@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -8,10 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle } from "lucide-react";
 import Image from "next/image";
-import {
-  auth,
-  provider,
-} from "@/lib/firebase/utils";
+import { auth, provider } from "@/lib/firebase/utils";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -47,13 +44,19 @@ const Login = () => {
 
     try {
       await setPersistence(auth, browserLocalPersistence);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       await reload(userCredential.user);
 
       if (userCredential.user.emailVerified) {
         router.push("/dashboard");
       } else {
-        setError("Email not verified. Please verify your email before logging in.");
+        setError(
+          "Email not verified. Please verify your email before logging in."
+        );
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -96,9 +99,7 @@ const Login = () => {
     <div className="flex flex-col min-h-screen">
       <div className="container-custom py-12">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold mb-6 text-center text-primary">
-            Log In
-          </h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">Log In</h1>
 
           {error && (
             <div className="bg-red-50 text-red-800 p-4 rounded-md mb-6 flex items-start">
@@ -116,6 +117,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="p-3 w-80 sm:w-auto border border-gray-400 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
             <div className="space-y-2">
@@ -134,11 +136,20 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="p-3 w-80 sm:w-auto border border-gray-400 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Log In"}
-            </Button>
+            <div className="flex justify-center items-center">
+              <button
+                type="submit"
+                className="text-md font-bold font-sans border-2 border-black rounded-full inline-flex hover:bg-black hover:text-white transition-all ease-in duration-200 py-3 px-6"
+                disabled={isLoading}
+              >
+                <p className="uppercase">
+                  {isLoading ? "Loging In..." : "Log In"}
+                </p>
+              </button>
+            </div>
           </form>
 
           <div className="mt-8">

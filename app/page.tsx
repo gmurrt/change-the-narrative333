@@ -1,7 +1,11 @@
 "use client";
 
+import { logo, logoSVG, nami } from "@/assets";
+import ChangeTheNarrative333Logo from "@/assets/ChangeTheNarrative333Logo";
+import BlackVotesMatter from "@/assets/partners/BlackVotesMatter";
+import Reform from "@/assets/partners/Reform";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,19 +16,35 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section - Bold, full-width with impactful typography */}
       <section className="relative md:h-[70vh] h-[40vh] w-full overflow-hidden">
+        <div className="relative z-10 -top-[4%] -left-[3%] md:-top-[6%] md:left-[10%] w-fit">
+          <div className="container-custom">
+            <Link
+              href="/"
+              className=" text-white"
+            >
+              <Image
+                src={logoSVG}
+                height={140}
+                width={140}
+                alt="logo"
+                className="invert md:h-[250px] md:w-[250px]"
+              />
+            </Link>
+          </div>
+        </div>
         {/* Background Image Layer */}
         <div
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
-            backgroundImage: `url('https://cdn.britannica.com/41/94241-050-B7398B5E/Philadelphia-foreground-Schuylkill-River.jpg?w=1200')`,
+            backgroundImage: `url(https://www.visitphilly.com/wp-content/uploads/2023/06/City-Hall-City-Council-Caucus-Room-by-by-M-Edlow-for-Philadelphia-Visitor-Center-Corporation-1200x900px.jpg)`,
           }}
         >
           <div className="absolute inset-0 bg-black/50" />
         </div>
 
         {/* Right-aligned welcome text */}
-        <div className="relative p-2 z-10 w-fit h-full flex items-center ml-auto mr-16 -top-1/4">
-          <div className="text-white max-w-md space-y-2">
+        {/* <div className="relative p-2 bg-red-500 z-10 w-[200px] h-fit">
+          <div className="text-white space-y-2">
             <h2 className="text-sm md:text-lg font-bold">
               Welcome to Philadelphia
             </h2>
@@ -33,7 +53,7 @@ export default function Home() {
               <br /> in the City of Brotherly Love.
             </p>
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Overlapping Typography Box with blend mode */}
@@ -48,19 +68,18 @@ export default function Home() {
             Centering People. Building Access. Driven by Justice.
           </p>
           <p className="text-sm mb-6">501(c)(3) Non-Profit Organization</p>
-          <div className="flex gap-4 flex-wrap">
-            <Link href="/register">
-              <Button className="bg-red-600 hover:bg-red-500 rounded-full text-lg px-6 py-4 font-bold">
-                GET HELP
-              </Button>
-            </Link>
-            <Link href="/donate">
-              <Button
-                variant="outline"
-                className="border-white rounded-full hover:text-black hover:bg-white/10 text-lg px-6 py-4 font-bold"
-              >
-                SUPPORT US
-              </Button>
+          <div className="flex gap-6 flex-wrap mt-10 mb-6 md:mb-16">
+            {/* <Link href="/register" className="rounded-full w-fit">
+              <div className="text-xl md:text-2xl font-extrabold font-sans border-2 border-black rounded-full inline-flex gap-2 hover:gap-6 transition-all ease-in duration-200 p-3 md:p-6">
+                <p>GET HELP</p>
+                <ArrowRight className="self-center" />
+              </div>
+            </Link> */}
+            <Link href="/donate" className="rounded-full w-fit">
+              <div className="text-xl font-extrabold font-sans border-2 border-black rounded-full inline-flex gap-2 hover:gap-6 transition-all ease-in duration-200 p-3 md:p-6">
+                <p>SUPPORT US</p>
+                <ArrowRight className="self-center" />
+              </div>
             </Link>
           </div>
         </div>
@@ -70,10 +89,10 @@ export default function Home() {
       <section className="py-16 bg-white">
         <div className="container-custom">
           <h2 className="text-4xl md:text-5xl font-black mb-12 uppercase">
-            Our Mission
+            What we fight for
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-6 grid-rows-[repeat(3,minmax(200px,1fr))] gap-6 auto-rows-[200px]">
+          <div className="grid grid-cols-1 md:grid-cols-6 grid-rows-[repeat(2,minmax(200px,1fr))] gap-6">
             {/* Problem (Big block) */}
             <div className="relative rounded-xl overflow-hidden group col-span-1 row-span-1 md:col-span-4 md:row-span-2 h-80 md:h-[41.5rem]">
               <Image
@@ -92,12 +111,15 @@ export default function Home() {
                   intersecting social challenges like poverty, housing
                   instability, underfunded schools, and generational trauma.
                 </p>
-                <Link
-                  href="/about"
-                  className="text-gold hover:underline font-medium mt-3"
-                >
-                  View More →
-                </Link>
+                <div className="flex gap-1">
+                  <Link
+                    href="/about"
+                    className="text-gold hover:underline font-medium mt-3"
+                  >
+                    View More
+                  </Link>
+                  <span className="self-end text-gold">→</span>
+                </div>
               </div>
             </div>
 
@@ -117,12 +139,15 @@ export default function Home() {
                   partnering with local organizations, creating resource hubs,
                   and increasing visibility through media and events.
                 </p>
-                <Link
-                  href="/about"
-                  className="text-gold hover:underline font-medium mt-3"
-                >
-                  View More →
-                </Link>
+                <div className="flex gap-1">
+                  <Link
+                    href="/about"
+                    className="text-gold hover:underline font-medium mt-3"
+                  >
+                    View More
+                  </Link>
+                  <span className="self-end text-gold">→</span>
+                </div>
               </div>
             </div>
 
@@ -136,18 +161,21 @@ export default function Home() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 p-6 flex flex-col justify-end text-white">
-                <h3 className="text-2xl font-bold mb-2">The Impact</h3>
+                <h3 className="text-2xl font-bold mb-2">The Vision</h3>
                 <p className="text-sm">
                   We envision safer, more stable communities where individuals
                   have the tools to heal, grow, and break cycles of
                   trauma—unlocking their full potential.
                 </p>
-                <Link
-                  href="/about"
-                  className="text-gold hover:underline font-medium mt-3"
-                >
-                  View More →
-                </Link>
+                <div className="flex gap-1">
+                  <Link
+                    href="/about"
+                    className="text-gold hover:underline font-medium mt-3"
+                  >
+                    View More
+                  </Link>
+                  <span className="self-end text-gold">→</span>
+                </div>
               </div>
             </div>
           </div>
@@ -155,11 +183,11 @@ export default function Home() {
       </section>
 
       {/* Bold Mission Section - Large Typography */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-[#FFF5ED]">
         <div className="container-custom">
           <div className="md:flex md:items-start md:gap-12">
             <div className="md:w-2/3">
-              <h2 className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tight text-primary">
+              <h2 className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tight">
                 CHANGE THE NARRATIVE. <br /> THEN THE NATION.
               </h2>
 
@@ -210,7 +238,7 @@ export default function Home() {
 
                 <button
                   onClick={() => setShowFullProblem(!showFullProblem)}
-                  className="flex items-center text-accent font-medium mt-2 hover:underline focus:outline-none"
+                  className="flex items-center font-semibold mt-2 hover:underline focus:outline-none"
                 >
                   {showFullProblem ? (
                     <>
@@ -229,39 +257,44 @@ export default function Home() {
 
             <div className="mt-8 md:mt-0 md:w-1/3">
               <div className="bg-white p-8 rounded-lg shadow-md">
-                <h3 className="text-2xl font-bold mb-4 text-primary">
-                  National Impact
+                <h3 className="text-2xl font-bold mb-4">
+                  Our Esteemed Partners
                 </h3>
                 <div className="grid grid-cols-5 gap-4">
                   <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2">
-                      AL
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-2">
+                      <BlackVotesMatter />
                     </div>
-                    <span className="text-sm font-medium">Alabama</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2">
-                      FL
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-2">
+                      <Image
+                        src="https://thelohm.org/wp-content/uploads/2020/03/mainlogo_web.png"
+                        height={100}
+                        width={100}
+                        alt="TheLOHM"
+                      />
                     </div>
-                    <span className="text-sm font-medium">Florida</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2">
-                      GA
+                    <div className="w-16 h-16 bg-[#0C64A0] p-2 rounded-full flex items-center justify-center mb-2">
+                      <Image src={nami} height={100} width={100} alt="nami" />
                     </div>
-                    <span className="text-sm font-medium">Georgia</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2">
-                      LA
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-2">
+                      <Image
+                        src="https://policingequity.org/wp-content/uploads/2024/05/CPE-FullColor-Logo-145x38.webp"
+                        height={100}
+                        width={100}
+                        alt="PolicyEquity"
+                      />
                     </div>
-                    <span className="text-sm font-medium">Louisiana</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-2">
-                      MS
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center mb-2">
+                      <Reform />
                     </div>
-                    <span className="text-sm font-medium">Mississippi</span>
                   </div>
                 </div>
               </div>
@@ -275,10 +308,10 @@ export default function Home() {
         <div className="container-custom">
           <div className="space-y-12">
             <div>
-              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase text-primary">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase">
                 LANDMARK CASES
               </h2>
-              <div className="flex">
+              <div className="flex flex-col md:flex-row">
                 <div className="w-24 h-24 bg-gray-200 mr-4 rounded"></div>
                 <div>
                   <p className="text-lg">
@@ -296,10 +329,10 @@ export default function Home() {
             </div>
 
             <div>
-              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase text-primary">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase">
                 INSPIRING HOPE
               </h2>
-              <div className="flex">
+              <div className="flex flex-col md:flex-row">
                 <div className="w-24 h-24 bg-gray-200 mr-4 rounded"></div>
                 <div>
                   <p className="text-lg">
@@ -317,10 +350,10 @@ export default function Home() {
             </div>
 
             <div>
-              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase text-primary">
+              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase">
                 TRACKING ISSUES
               </h2>
-              <div className="flex">
+              <div className="flex flex-col md:flex-row">
                 <div className="w-24 h-24 bg-gray-200 mr-4 rounded"></div>
                 <div>
                   <p className="text-lg">
@@ -341,28 +374,31 @@ export default function Home() {
       </section>
 
       {/* CTA Section - Two Column Layout */}
-      <section className="py-16">
+      <section className="py-16 bg-[#FFF5ED]">
         <div className="container-custom">
-          <div className="md:flex md:items-center">
-            <div className="md:w-1/2">
-              <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase">
-                Take Action
-              </h2>
-              <p className="text-xl mb-6">
-                Change starts with individual actions. Join us in our mission to
-                break cycles of violence and create stronger, more equitable
-                communities.
-              </p>
-              <Link href="/register">
-                <Button className="bg-white text-primary hover:bg-gray-100 font-bold">
-                  GET INVOLVED
-                </Button>
+          <div className="md:flex">
+            <div className="md:w-1/2 flex flex-col justify-around">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black mb-4 uppercase">
+                  Take Action
+                </h2>
+                <p className="text-xl mb-6">
+                  Change starts with individual actions. Join us in our mission
+                  to break cycles of violence and create stronger, more
+                  equitable communities.
+                </p>
+              </div>
+              <Link href="/register" className="rounded-full w-fit">
+                <div className="text-xl md:text-2xl font-extrabold font-sans border-2 border-black rounded-full inline-flex gap-2 hover:gap-6 transition-all ease-in duration-100 p-3 md:p-6">
+                  <p>GET INVOLVED</p>
+                  <ArrowRight className="self-center" />
+                </div>
               </Link>
             </div>
 
             <div className="mt-8 md:mt-0 md:w-1/2 md:pl-12">
               <Image
-                src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?q=80&w=1074&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1655720359248-eeace8c709c5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2UlMjBhcmUlMjB0b2dldGhlciUyMHRvJTIwaGVscCUyMGVhY2hvdGhlcnxlbnwwfHwwfHx8MA%3D%3D"
                 alt="People at protest"
                 width={1074}
                 height={720}

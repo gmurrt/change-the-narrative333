@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Mail, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { db } from "@/lib/firebase/utils";
 import { collection, addDoc } from "firebase/firestore";
@@ -38,7 +38,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-[#3a3426] text-white">
       <div className="container-custom py-12">
         {/* Newsletter Section */}
         <div className="mb-12">
@@ -58,15 +58,16 @@ const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="p-2 w-80 sm:w-auto border border-gray-300 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-accent"
+                className="p-3 w-80 sm:w-auto border border-gray-300 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#FFF5ED]"
               />
-              <Button
+              <button
                 type="submit"
-                className="bg-accent hover:bg-accent/90 px-6 py-2 font-semibold"
+                className="text-xl font-extrabold font-sans border-2 border-white rounded-full inline-flex gap-2 hover:gap-6 transition-all ease-in duration-200 p-3"
                 disabled={loading}
               >
-                {loading ? "Subscribing..." : "Subscribe"}
-              </Button>
+                <p className="uppercase">{loading ? "Subscribing..." : "Subscribe"}</p>
+                <ArrowRight className={`self-center ${loading && "opacity-0 hidden"}`}/>
+              </button>
             </form>
           </div>
         </div>

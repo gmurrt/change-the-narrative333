@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "firebase": "^11.7.1",
+    "framer-motion": "^12.16.0",
     "highlight.js": "^11.11.1",
     "lexical": "^0.31.1",
     "lowlight": "^3.3.0",

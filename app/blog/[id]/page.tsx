@@ -19,17 +19,6 @@ const BlogPostPage = async ({ params }: BlogPageProps) => {
 
   return (
     <div className="w-full py-16 px-4 lg:px-24">
-      {post.coverImage && (
-        <div className="relative w-full h-96 mb-10">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            className="object-cover rounded-md"
-          />
-        </div>
-      )}
-
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
       <div className="text-sm text-gray-500 flex flex-wrap items-center gap-4 mb-10">
         <span className="flex items-center gap-1">
