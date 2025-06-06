@@ -57,6 +57,19 @@ type BlogFormData = {
   coverImage: string;
 };
 
+// Add this type definition for the blog post
+type BlogPost = {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  type: string;
+  publishDate: Timestamp;
+  excerpt: string;
+  content: string;
+  coverImage?: string;
+};
+
 const Admin = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -122,7 +135,8 @@ const Admin = () => {
     setIsFormOpen(true);
   };
 
-  const handlePostEdit = (post) => {
+  // Fixed with proper TypeScript type
+  const handlePostEdit = (post: BlogPost) => {
     setEditingPostId(post.id);
     const formattedDate = post.publishDate
       ? post.publishDate.toDate().toISOString().split("T")[0]
@@ -173,7 +187,8 @@ const Admin = () => {
     setEditingPostId(null);
   };
 
-  const handleDeletePost = async (post) => {
+  // Fixed with proper TypeScript type
+  const handleDeletePost = async (post: BlogPost) => {
     setDeletingPostId(post.id); // Mark this post as being deleted
     await deletePost(post.id);
     setDeletingPostId(null);

@@ -1,16 +1,33 @@
+"use client";
+
 import { BlackVotesMatterLogoPNG, logoSVG, nami } from "@/assets";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import BlackVotesMatter from "@/assets/partners/BlackVotesMatter";
 import Reform from "@/assets/partners/Reform";
 
+// Define types for better TypeScript support
+type PartnerLogo = React.ComponentType<{ className?: string }> | string | StaticImageData | null;
+
+type Partner = {
+  id: number;
+  name: string;
+  logo: PartnerLogo;
+  logoType: "component" | "image" | "static" | "none";
+  category: string;
+  description: string;
+  website: string;
+  partnership_since: string;
+};
+
 // Partner data - replace with your actual partners
-const partners = [
+const partners: Partner[] = [
   {
     id: 1,
     name: "Black Votes Matter",
     logo: BlackVotesMatter,
+    logoType: "component", // Indicates this is a React component
     category: "Legal Advocacy",
     description: `Black Voters Matter Fund is a nonprofit organization committed to increasing power in marginalized, predominantly Black communities through voter engagement, policy advocacy, and grassroots organizing. Their work centers on expanding access to voting, supporting Black-led community-based organizations, and promoting policies that advance racial, social, and economic justice. By mobilizing voters and building long-term political infrastructure, Black Voters Matter aims to amplify the voices of Black communities and ensure they are a driving force in shaping democratic outcomes.`,
     website: "https://blackvotersmatterfund.org/",
@@ -20,6 +37,7 @@ const partners = [
     id: 2,
     name: "The Ladies of Hope Ministries (LOHM)",
     logo: "https://thelohm.org/wp-content/uploads/2020/03/mainlogo_web.png",
+    logoType: "image", // Indicates this is an image URL
     category: "Community Building",
     description: `The Ladies of Hope Ministries (LOHM) is a nonprofit organization dedicated to empowering 
 women and girls who have been directly impacted by the criminal legal system. Founded by 
@@ -35,6 +53,7 @@ incarceration—especially for women of color.`,
     id: 3,
     name: "National Alliance on Mental Illness (NAMI)",
     logo: nami,
+    logoType: "static", // Indicates this is an imported static image
     category: "Research & Policy",
     description: `The National Alliance on Mental Illness (NAMI) is the United States' largest grassroots mental 
 health organization dedicated to building better lives for individuals affected by mental illness. 
@@ -48,14 +67,16 @@ mental health equity nationwide.`,
   },
   {
     id: 4,
-    name: "Aniyiah’s Companions",
+    name: "Aniyiah's Companions",
+    logo: null, // No logo
+    logoType: "none",
     category: "Technology",
-    description: `Aniyah’s Companions is a Philadelphia-based organization dedicated to empowering youth and 
+    description: `Aniyah's Companions is a Philadelphia-based organization dedicated to empowering youth and 
 adults through comprehensive life skills and financial literacy education. The organization offers 
 hands-on support in areas such as banking, credit, budgeting, and money 
 management—equipping participants with the tools needed for long-term financial stability. 
 Through workshops on homeownership, small business development, and wealth building, 
-Aniyah’s Companions promotes economic empowerment across generations. In addition, the 
+Aniyah's Companions promotes economic empowerment across generations. In addition, the 
 organization provides critical life skills training in areas like career readiness, educational 
 planning, health, mental wellness, tenant rights, and relationship building. Their holistic 
 approach connects individuals to essential community resources while fostering confidence, 
@@ -67,6 +88,7 @@ independence, and leadership through interactive programming and community engag
     id: 5,
     name: "Center for Policing Equity",
     logo: "https://policingequity.org/wp-content/uploads/2024/05/CPE-FullColor-Logo-145x38.webp",
+    logoType: "image",
     category: "Youth Development",
     description: `The Center for Policing Equity (CPE) is a research and action organization that works to advance 
 justice by confronting and eliminating racial bias in public safety systems. Rooted in data science 
@@ -83,6 +105,7 @@ systems of public safety that are rooted in equity, transparency, and public tru
     id: 6,
     name: "REFORM Alliance ",
     logo: Reform,
+    logoType: "component", // Indicates this is a React component
     category: "Economic Empowerment",
     description: `REFORM Alliance is a national nonprofit organization committed to transforming probation, 
 parole, and the broader criminal justice system in the United States. Co-founded by leaders in 
@@ -97,25 +120,44 @@ equitable and restorative approach to justice.`,
   },
 ];
 
-const PartnerCard = ({ partner }: { partner: (typeof partners)[0] }) => (
-  <div className="w-full bg-white border-t border-b border-gray-200 py-8 px-4 sm:px-8 lg:px-16 hover:bg-gray-50 transition-all duration-300">
-    <div className="flex flex-col md:flex-row md:items-center gap-6">
-      {/* Logo */}
-      <div className="flex-shrink-0 w-64 h-64 bg-[#5c5120] rounded-full overflow-hidden flex items-center justify-center mx-auto md:mx-0">
-        {typeof partner.logo === "function" ? (
-          <partner.logo className="w-28 h-28 object-contain" />
-        ) : partner.logo ? (
-          <Image
-            src={partner.logo}
-            alt={partner.name}
-            width={100}
-            height={100}
-            className="object-contain"
-          />
-        ) : (
-          <div className="text-sm text-gray-400">No logo</div>
-        )}
-      </div>
+const PartnerCard = ({ partner }: { partner: Partner }) => {
+  // Type guard and safe rendering for component logos
+  const renderLogo = () => {
+    if (partner.logoType === "component" && partner.logo) {
+      const LogoComponent = partner.logo as React.ComponentType<{ className?: string }>;
+      return <LogoComponent className="w-28 h-28 object-contain" />;
+    } else if (partner.logoType === "image" && partner.logo) {
+      return (
+        <Image
+          src={partner.logo as string}
+          alt={partner.name}
+          width={100}
+          height={100}
+          className="object-contain"
+        />
+      );
+    } else if (partner.logoType === "static" && partner.logo) {
+      return (
+        <Image
+          src={partner.logo as StaticImageData}
+          alt={partner.name}
+          width={100}
+          height={100}
+          className="object-contain"
+        />
+      );
+    } else {
+      return <div className="text-sm text-gray-400">No logo</div>;
+    }
+  };
+
+  return (
+    <div className="w-full bg-white border-t border-b border-gray-200 py-8 px-4 sm:px-8 lg:px-16 hover:bg-gray-50 transition-all duration-300">
+      <div className="flex flex-col md:flex-row md:items-center gap-6">
+        {/* Logo */}
+        <div className="flex-shrink-0 w-64 h-64 bg-[#5c5120] rounded-full overflow-hidden flex items-center justify-center mx-auto md:mx-0">
+          {renderLogo()}
+        </div>
 
       {/* Text Content */}
       <div className="flex-1">
@@ -157,10 +199,11 @@ const PartnerCard = ({ partner }: { partner: (typeof partners)[0] }) => (
             </svg>
           </a>
         </div>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const page = () => {
   return (
@@ -180,7 +223,7 @@ const page = () => {
           <div className="container-custom">
             <Link href="/" className=" text-white">
               <Image
-                src={logoSVG}
+                src={typeof logoSVG === 'string' ? logoSVG : logoSVG.src || '/logo.svg'}
                 height={140}
                 width={140}
                 alt="logo"

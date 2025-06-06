@@ -28,8 +28,36 @@ import { Label } from "./ui/label";
 import { useEffect, useState } from "react";
 import { Checkbox } from "./ui/checkbox";
 import { exportToCSV } from "@/lib/utils";
+import { Timestamp } from "firebase/firestore";
 
-const formatDate = (ts: any) =>
+// Define types for survey data
+type SurveyData = {
+  id: string;
+  name: string;
+  email: string;
+  role: "help-seeker" | "supporter";
+  status: string;
+  date: Timestamp;
+  location?: string;
+  needs?: string;
+  interest?: string;
+  [key: string]: unknown; // For additional fields
+};
+
+type TableSectionProps = {
+  data: SurveyData[];
+  setSelectedSurvey: (survey: SurveyData | null) => void;
+  selectedIds: string[];
+  setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+type PaginationControlsProps = {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  totalItems: number;
+};
+
+const formatDate = (ts: Timestamp | null | undefined): string =>
   ts?.toDate?.()
     ? ts.toDate().toLocaleDateString("en-US", {
         year: "numeric",
@@ -42,7 +70,7 @@ const PAGE_SIZE = 5;
 
 const SurveyTab = () => {
   const { surveys, deleteSurvey } = useAdminSurveys();
-  const [selectedSurvey, setSelectedSurvey] = useState<any | null>(null);
+  const [selectedSurvey, setSelectedSurvey] = useState<SurveyData | null>(null);
   const [activeTab, setActiveTab] = useState("help-seekers");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -242,7 +270,7 @@ const TableSection = ({
   setSelectedSurvey,
   selectedIds,
   setSelectedIds,
-}) => {
+}: TableSectionProps) => {
   const isSupporter = data?.[0]?.interest !== undefined;
 
   const toggleSelect = (id: string) => {
@@ -285,11 +313,11 @@ const TableSection = ({
               <TableCell>{survey.name}</TableCell>
               <TableCell>{survey.email}</TableCell>
               {isSupporter ? (
-                <TableCell>{survey.interest.slice(0, 20)}...</TableCell>
+                <TableCell>{survey.interest?.slice(0, 20)}...</TableCell>
               ) : (
                 <>
                   <TableCell>{survey.location}</TableCell>
-                  <TableCell>{survey.needs.slice(0, 20)}...</TableCell>
+                  <TableCell>{survey.needs?.slice(0, 20)}...</TableCell>
                 </>
               )}
               <TableCell>
@@ -314,7 +342,7 @@ const TableSection = ({
   );
 };
 
-const PaginationControls = ({ page, setPage, totalItems }: any) => {
+const PaginationControls = ({ page, setPage, totalItems }: PaginationControlsProps) => {
   const totalPages = Math.ceil(totalItems / PAGE_SIZE);
   if (totalPages <= 1) return null;
 

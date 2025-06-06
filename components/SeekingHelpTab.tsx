@@ -23,45 +23,48 @@ import { Timestamp } from 'firebase/firestore';
 import { TabsContent } from '@/components/ui/tabs';
 import { useAdminSurveys } from '@/hooks/useAdminSurveys';
 
+// Define the initial form state
+const initialFormState = {
+  // Basic Info
+  name: '',
+  email: '',
+  location: '',
+  needs: '',
+  status: 'Pending',
+  
+  // Consent
+  resourceConsent: false,
+  researchConsent: false,
+  
+  // Social Determinant Questions
+  gunViolenceImpact: '',
+  mentalHealth: '',
+  stableHousing: '',
+  foodChallenges: '',
+  careerInterest: '',
+  financialLiteracy: '',
+  criminalLegalImpact: '',
+  employmentAffected: '',
+  paroleStatus: '',
+  legalAssistance: '',
+  voterRegistration: '',
+  electionParticipation: '',
+  educationalInterest: '',
+  primaryCareProvider: '',
+  healthConcerns: '',
+  mentorshipInterest: '',
+  additionalInfo: ''
+};
+
 const SeekingHelpTab = () => {
   const { addSurvey } = useAdminSurveys();
 
   const [open, setOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [form, setForm] = useState({
-    // Basic Info
-    name: '',
-    email: '',
-    location: '',
-    needs: '',
-    status: 'Pending',
-    
-    // Consent
-    resourceConsent: false,
-    researchConsent: false,
-    
-    // Social Determinant Questions
-    gunViolenceImpact: '',
-    mentalHealth: '',
-    stableHousing: '',
-    foodChallenges: '',
-    careerInterest: '',
-    financialLiteracy: '',
-    criminalLegalImpact: '',
-    employmentAffected: '',
-    paroleStatus: '',
-    legalAssistance: '',
-    voterRegistration: '',
-    electionParticipation: '',
-    educationalInterest: '',
-    primaryCareProvider: '',
-    healthConcerns: '',
-    mentorshipInterest: '',
-    additionalInfo: ''
-  });
+  const [form, setForm] = useState(initialFormState);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -75,7 +78,8 @@ const SeekingHelpTab = () => {
     });
     setSubmitting(false);
     setOpen(false);
-    setForm({ name: '', email: '', location: '', needs: '', status: 'Pending' });
+    setCurrentStep(0); // Reset to first step
+    setForm(initialFormState); // Reset all form fields
   };
 
    const nextStep = () => {
@@ -158,10 +162,11 @@ const SeekingHelpTab = () => {
             
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <Checkbox 
+                <input
+                  type="checkbox"
                   id="resourceConsent"
                   checked={form.resourceConsent}
-                  onCheckedChange={(checked) => handleChange('resourceConsent', checked)}
+                  onChange={(e) => handleChange('resourceConsent', e.target.checked)}
                 />
                 <Label htmlFor="resourceConsent" className="text-sm leading-relaxed">
                   I consent to Change the Narrative 333 and its partners using my responses to help 
@@ -170,10 +175,11 @@ const SeekingHelpTab = () => {
               </div>
               
               <div className="flex items-start space-x-3">
-                <Checkbox 
+                <input
+                  type="checkbox"
                   id="researchConsent"
                   checked={form.researchConsent}
-                  onCheckedChange={(checked) => handleChange('researchConsent', checked)}
+                  onChange={(e) => handleChange('researchConsent', e.target.checked)}
                 />
                 <Label htmlFor="researchConsent" className="text-sm leading-relaxed">
                   I consent to my anonymized responses being used for research aimed at better 

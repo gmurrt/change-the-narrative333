@@ -8,8 +8,25 @@ import { Button } from "@/components/ui/button";
 import { useAdminDonation } from "@/hooks/useAdminDonation";
 import BuyMeACoffeeButton from "./BuyMeACoffee";
 
+// Add type definitions for the donation content
+type DonationImpact = {
+  amount: number;
+  description: string;
+};
+
+type DonationAllocation = {
+  directSupport: number;
+  communityPrograms: number;
+  operations: number;
+};
+
+type DonationContent = {
+  allocation: DonationAllocation;
+  impacts: DonationImpact[];
+};
+
 const Donate = () => {
-  const { content } = useAdminDonation();
+  const { content }: { content: DonationContent | null } = useAdminDonation();
 
   return (
     <div className="flex flex-col">
@@ -162,7 +179,7 @@ const Donate = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {content?.impacts.map((impact) => (
+                  {content?.impacts.map((impact: DonationImpact) => (
                     <div
                       key={impact.description}
                       className="flex items-start gap-4"
@@ -185,7 +202,7 @@ const Donate = () => {
               </CardHeader>
               <CardContent className="py-10 flex flex-col items-center justify-center text-center space-y-6">
                 <p className="text-lg text-gray-700 max-w-md">
-                  Support us directly through BuyMeACoffee — it’s secure,
+                  Support us directly through BuyMeACoffee — it's secure,
                   simple, and appreciated!
                 </p>
                 <BuyMeACoffeeButton />
